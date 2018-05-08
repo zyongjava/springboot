@@ -1,8 +1,8 @@
-## springmvc项目框架
+## spring boot项目框架
 
 #### 简介
 
-  基于springmvc + mybatis搭建项目框架
+  基于springboot+ mybatis搭建项目框架
 
 #### 建表语句
 
@@ -24,6 +24,6 @@ INSERT user_info(name, age, gmt_create, gmt_modified) values("zhangsan", 16, "20
   1. 建表,并修改数据库连接和数据库用户名密码
   2. mvn eclipse:clean eclipse:eclipse
   3. mvn clean install -Dmaven.test.skip=true -U
-  4. 启动tomcat直接运行
+  4. 启动tomcat直接运行(或直接运行MainApp.java启动)
   5. 访问: http://localhost:8080/get.htm
 

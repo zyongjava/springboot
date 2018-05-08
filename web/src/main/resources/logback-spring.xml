@@ -3,7 +3,6 @@
 <configuration debug="true">
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <target>System.out</target>
-        <encoding>UTF-8</encoding>
         <filter class="com.alibaba.citrus.logconfig.logback.LevelRangeFilter">
             <levelMax>INFO</levelMax>
         </filter>
@@ -16,7 +15,6 @@
 
     <appender name="STDERR" class="ch.qos.logback.core.ConsoleAppender">
         <target>System.err</target>
-        <encoding>UTF-8</encoding>
         <filter class="com.alibaba.citrus.logconfig.logback.LevelRangeFilter">
             <levelMin>WARN</levelMin>
         </filter>
