@@ -4,9 +4,9 @@ import cn.pomelo.biz.service.intf.UserService;
 import cn.pomelo.dal.mysql.object.UserDO;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import java.util.List;
  * 网页访问 <br/>
  * Created by zhengyong on 16/8/30.
  */
-@Controller
+@RestController
 public class Monitor {
 
     @Autowired
@@ -27,7 +27,6 @@ public class Monitor {
     }
 
     @RequestMapping(value = "/get")
-    @ResponseBody
     public String getList(String name, Integer age) {
         List<UserDO> userDOList = userService.queryByParam(name, age);
 
