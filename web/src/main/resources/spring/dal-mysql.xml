@@ -79,7 +79,7 @@
     <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START DAO定义 配置 >>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="configLocation"
-                  value="classpath:mybatis/springmvc-mysql-sqlmap-config.xml"/>
+                  value="classpath:mybatis/springboot-mysql-sqlmap-config.xml"/>
         <property name="mapperLocations" value="classpath*:mybatis/mapper/*.xml"/>
         <property name="typeAliasesPackage" value="cn.pomelo.dal.mysql.object"/>
         <property name="dataSource" ref="dataSource"/>

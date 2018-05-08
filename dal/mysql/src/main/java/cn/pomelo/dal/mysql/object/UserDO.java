@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
- * 团伙节点 Created by zhengyong on 16/8/19.
+ * 用户 Created by zhengyong on 16/8/19.
  */
 public class UserDO implements Serializable {
 
