@@ -1,0 +1,15 @@
+#!/bin/bash
+
+BASE_DIR=`dirname $0`
+. $BASE_DIR/env
+
+export CATALINA_BASE=$APP_DEPLOY_HOME/tomcat
+export CATALINA_PID=$CATALINA_BASE/tomcat.pid
+
+if [ ! -d "$CATALINA_BASE/conf/Catalina/localhost" ]; then
+	mkdir -p $CATALINA_BASE/conf/Catalina/localhost
+fi
+cp -f $APP_DEPLOY_HOME/conf/context.xml $CATALINA_BASE/conf/Catalina/localhost/ROOT.xml
+
+chmod -R +x $APP_DEPLOY_HOME/bin/
+$APP_DEPLOY_HOME/bin/tomcatctl start

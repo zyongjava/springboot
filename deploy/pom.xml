@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <parent>
+        <groupId>cn.springboot</groupId>
+        <artifactId>springboot-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>springboot-deploy</artifactId>
+    <name>springboot-deploy</name>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <build>
+        <filters>
+            <filter>../springboot.properties</filter>
+        </filters>
+        <resources>
+            <resource>
+                <directory>src/main/scripts</directory>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+        <plugins>
+            <!-- ant filter -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>prepare-deploy-package</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <copy file="../web/target/springboot-web-1.0.0-SNAPSHOT.war" tofile="target/springboot.war" overwrite="true">
+                                </copy>
+                                <copy todir="conf" overwrite="true">
+                                    <fileset dir="target/classes">
+                                        <include name="context.xml" />
+                                    </fileset>
+                                </copy>
+                                <copy todir="tomcat/conf" overwrite="true">
+                                    <fileset dir="target/classes">
+                                        <include name="server.xml" />
+                                        <include name="logging.properties" />
+                                        <include name="catalina.policy"/>
+                                        <include name="catalina.properties"/>
+                                        <include name="tomcat-users.xml"/>
+                                        <include name="web.xml"/>
+                                    </fileset>
+                                </copy>
+                                <copy todir="bin" overwrite="true">
+                                    <fileset dir="target/classes">
+                                        <include name="env" />
+                                        <include name="shutdown" />
+                                        <include name="startup" />
+                                        <include name="tomcatctl" />
+                                        <include name="apachectl" />
+                                    </fileset>
+                                </copy>
+                                <chmod dir="bin" perm="755" includes="**" />
+                            </tasks>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>

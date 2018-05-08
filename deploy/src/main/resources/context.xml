@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path=""
+         docBase="${tomcat.context.docBase}"
+         workDir="${tomcat.context.workDir}"
+         debug="0"
+         reloadable="true" >
+</Context>

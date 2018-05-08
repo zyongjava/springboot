@@ -1,0 +1,18 @@
+#!/bin/bash
+
+BASE_DIR=`dirname $0`
+. $BASE_DIR/env
+
+$APP_DEPLOY_HOME/bin/tomcatctl stop
+
+if [ "$?" == "0" ]; then
+    rm -rf $APP_DEPLOY_HOME/WEB-INF
+    rm -rf $APP_DEPLOY_HOME/tomcat/webapps
+
+    # clear logs
+    rm -f $APP_OUTPUT/logs/catalina*.log
+    rm -f $APP_OUTPUT/logs/localhost*.log
+    rm -f $APP_OUTPUT/logs/host-manager*.log
+    rm -f $APP_OUTPUT/logs/manager*.log
+    echo "clear useless logs is ok!"
+fi

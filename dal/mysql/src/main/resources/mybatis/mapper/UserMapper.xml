@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.pomelo.dal.mysql.dao.UserDao">
+
+    <resultMap type="UserDO" id="UserMap">
+        <result property="id" column="id"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtModified" column="gmt_modified"/>
+        <result property="name" column="name"/>
+        <result property="age" column="age"/>
+    </resultMap>
+
+    <sql id="queryColumns">
+        gmt_create, gmt_modified, name, age
+    </sql>
+
+    <select id="queryByParam" resultMap="UserMap" parameterType="String">
+        SELECT
+        <include refid="queryColumns"/>
+        FROM user_info
+        <where>
+            <if test="age != null">
+                AND age = #{age}
+            </if>
+            <if test="name != null">
+               AND name = #{name}
+            </if>
+        </where>
+        ORDER BY gmt_create DESC
+    </select>
+
+    <insert id="insert" parameterType="UserDO" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user_info(<include refid="queryColumns"/>) VALUES
+            (#{gmtCreate}, #{gmtModified},#{nodeId}, #{name}, #{age}, #{item.name})
+    </insert>
+
+</mapper>

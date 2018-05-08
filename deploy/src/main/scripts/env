@@ -1,0 +1,78 @@
+#!/bin/bash
+
+export JAVA_HOME=${java.home}
+export TOMCAT_HOME=${tomcat.home}
+export WEB_APP_HOME=${app.home}
+export APP_DEPLOY_HOME=${app.deploy.home}
+export PRODUCTION_MODE=${app.product.mode}
+export APP_PORT=${app.port}
+export APP_DEBUG_PORT=${app.debug.port}
+export APP_OUTPUT=${app.output}
+
+export CHECK_STARTUP_URL="http://localhost:$APP_PORT/ok.htm"
+export STARTUP_SUCCESS_MSG="OK"
+export TOMCAT_LOG=$APP_OUTPUT/logs/tomcat.log
+export CATALINA_OUT=/dev/null
+
+
+if [ ! -e $JAVA_HOME ]; then
+    echo "********************************************************************"
+    echo "**Error: $JAVA_HOME not exist"
+    echo "********************************************************************"
+    exit 1
+fi
+
+#if [ ! -e $APACHE_HOME ]; then
+#    echo "********************************************************************"
+#    echo "**Error: $APACHE_HOME not exist."
+#    echo "********************************************************************"
+#    exit 1
+#fi
+
+if [ ! -e $TOMCAT_HOME ]; then
+    echo "********************************************************************"
+    echo "**Error: $TOMCAT_HOME not exist."
+    echo "********************************************************************"
+    exit 1
+fi
+
+JAVA_OPTS_EXT=" -Djava.awt.headless=true -Djava.net.preferIPv4Stack=true  -Dfile.encoding=UTF-8
+-DdisableIntlRMIStatTask=true -Ddubbo.application.logger=slf4j"
+JAVA_DEBUG_OPT=" -server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=${app.debug.port},server=y,suspend=n "
+JAVA_MONITOR_OPTS=" -Dtrace.flag=true -Dtrace.output.dir=$APP_DEPLOY_HOME/trace/ "
+
+if [ $PRODUCTION_MODE = "run" ]; then
+    #after the environment of online is all 64-bit,the below if and else judgement can be delete
+    str=`file $JAVA_HOME/bin/java | grep 64-bit`
+    if [ -n "$str" ]; then
+        JAVA_MEM_OPTS=" -server -Xmx3g -Xms3g -Xmn1g -XX:PermSize=256m -Xss256k  -XX:+UseConcMarkSweepGC  -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70"
+    else
+        JAVA_MEM_OPTS=" -server -Xms2g -Xmx2g -Xmn768m -XX:PermSize=256m -XX:+UseParallelGC "
+    fi
+
+    # gc log
+    JAVA_MEM_OPTS="$JAVA_MEM_OPTS -XX:+PrintGCDateStamps -XX:+PrintGCDetails -Xloggc:$APP_OUTPUT/logs/gc.log"
+
+    if [ -f $APP_DEPLOY_HOME/trace.flag ]; then
+        JAVA_OPTS=" $JAVA_MEM_OPTS $JAVA_MONITOR_OPTS "
+    else
+        JAVA_OPTS=" $JAVA_MEM_OPTS "
+    fi
+
+elif [ $PRODUCTION_MODE = "test" ]; then
+    JAVA_MEM_OPTS=" -server -Xms1024m -Xmx1024m -XX:PermSize=256m -XX:SurvivorRatio=2 -XX:+UseParallelGC "
+    JAVA_OPTS=" $JAVA_MEM_OPTS $JAVA_MONITOR_OPTS $JAVA_DEBUG_OPT"
+
+elif [ $PRODUCTION_MODE = "dev" ]; then
+    #we should reduce resource usage on developing mode
+    JAVA_MEM_OPTS=" -Xms64m -Xmx1024m -XX:MaxPermSize=256m "
+    JAVA_OPTS=" $JAVA_MEM_OPTS $JAVA_DEBUG_OPT $JAVA_MONITOR_OPTS "
+
+else
+    echo "********************************************************************"
+    echo "**Error: $PRODUCTION_MODE should be only: run, test, dev"
+    echo "********************************************************************"
+    exit 1
+fi
+
+export JAVA_OPTS=" $JAVA_OPTS $JAVA_OPTS_EXT"
