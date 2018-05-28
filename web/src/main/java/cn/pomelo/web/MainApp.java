@@ -1,4 +1,4 @@
-package cn.pomelo.web.main;
+package cn.pomelo.web;
 
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.*;
