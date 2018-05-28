@@ -30,10 +30,10 @@
         <httpcore.version>4.4</httpcore.version>
 
         <!-- google guava -->
-        <google.guava.version>18.0</google.guava.version>
+        <google.guava.version>20.0</google.guava.version>
 
         <!-- fastjson -->
-        <alibaba.fastjson.version>1.2.8</alibaba.fastjson.version>
+        <alibaba.fastjson.version>1.2.44</alibaba.fastjson.version>
         <!-- mysql -->
         <mysql-connector-version>5.1.26</mysql-connector-version>
         <druid.version>1.0.0</druid.version>
