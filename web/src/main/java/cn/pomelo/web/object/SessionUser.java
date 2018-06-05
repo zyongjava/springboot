@@ -10,6 +10,7 @@ public class SessionUser {
     private String name;
     private Integer age;
     private String ipAddress;
+    private String sessionId;
 
     public Long getId() {
         return id;
@@ -41,5 +42,13 @@ public class SessionUser {
 
     public void setIpAddress(String ipAddress) {
         this.ipAddress = ipAddress;
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
     }
 }

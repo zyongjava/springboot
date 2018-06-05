@@ -2,10 +2,9 @@ package cn.pomelo.web.controller;
 
 import cn.pomelo.biz.service.intf.UserService;
 import cn.pomelo.dal.mysql.object.UserDO;
-import cn.pomelo.web.object.SessionAuthentication;
+import cn.pomelo.web.object.SessionUser;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,7 +16,7 @@ import java.util.List;
  * Created by zhengyong on 16/8/30.
  */
 @Controller
-public class Monitor {
+public class Monitor extends BaseController{
 
     @Autowired
     private UserService userService;
@@ -33,21 +32,12 @@ public class Monitor {
         return "noSession";
     }
 
-    @RequestMapping(value = "/index")
-    public String index() {
-        return "index";
-    }
-
     @RequestMapping(value = "/get")
     @ResponseBody
-    public String getList(Integer age) {
-
-        // filter context session
-        SessionAuthentication authentication = (SessionAuthentication) SecurityContextHolder.getContext().getAuthentication();
-        System.out.println(authentication.getName());
-
-        List<UserDO> userDOList = userService.queryByParam(authentication.getName(), age);
-
+    public String getList() {
+        SessionUser sessionUser = super.getSessionUser();
+        System.out.println(JSON.toJSONString(sessionUser));
+        List<UserDO> userDOList = userService.queryByParam(sessionUser.getName(), sessionUser.getAge());
         return String.format("get result = %s.", JSON.toJSONString(userDOList));
     }
 

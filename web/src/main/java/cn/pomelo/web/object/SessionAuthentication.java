@@ -36,7 +36,7 @@ public class SessionAuthentication implements Authentication {
     @Override
     public Object getPrincipal() {
         if (!isAuthenticated()) return null;
-        return sessionUser.getId();
+        return sessionUser.getSessionId();
     }
 
     @Override

@@ -13,7 +13,7 @@ public interface Constants {
     /**
      * session key
      */
-    String SESSION_KEY = "user_session";
+    String SESSION_KEY = "JSESSIONID";
 
     /**
      * 不需要权限拦截地址
@@ -22,5 +22,5 @@ public interface Constants {
             "/error/session",
             "/login",
             "/ok.htm",
-            "/login/out", "/index", "")));
+            "/login/out", "/favicon.ico", "")));
 }
