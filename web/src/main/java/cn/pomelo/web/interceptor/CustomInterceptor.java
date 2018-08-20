@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
- * 自定义连接器
+ * 自定义拦截器
  *
  * @author: zhengyong Date: 2018/5/28 Time: 上午10:07
  */
