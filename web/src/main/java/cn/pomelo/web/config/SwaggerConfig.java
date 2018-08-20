@@ -13,7 +13,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
- * swagger自动生成API文档 (http://127.0.0.1:8080/error/session)
+ * swagger自动生成API文档 (http://127.0.0.1:8080/swagger-ui.html)
  */
 @EnableSwagger2
 @Configuration
