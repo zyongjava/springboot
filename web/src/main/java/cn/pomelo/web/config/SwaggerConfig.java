@@ -39,7 +39,7 @@ public class SwaggerConfig {
                 .title("SpringBoot-Swagger2集成和使用-demo示例")
                 .description("spring boot swagger restful api document")
                 // 作者信息
-                .contact(new Contact("yong.zheng", "https://blog.csdn.net/zhengyong15984285623?viewmode=contents", "zyongjava@163.com"))
+                .contact(new Contact("yong.zheng", "https://blog.csdn.net/zhengyong15984285623/article/details/81873993", "zyongjava@163.com"))
                 .version("1.0.0")
                 .build();
     }
